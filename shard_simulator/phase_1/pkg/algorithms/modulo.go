@@ -10,6 +10,10 @@ func NewModulo() *ModuloSharding {
 	return &ModuloSharding{nodes: []string{}}
 }
 
+func (m *ModuloSharding) Name() string {
+	return "Modulo Hashing"
+}
+
 func (m *ModuloSharding) AddNode(nodeId string) {
 	m.nodes = append(m.nodes, nodeId)
 }
