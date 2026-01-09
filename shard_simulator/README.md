@@ -12,3 +12,15 @@ It is split into 2 phases:
   - Directory based Hashing
   - Geo based Hashing
   
+  The results can be found in the visualization Directory
+  
+## Requirements
+  - Docker
+  - Golang 1.23 or later
+  - Python
+  
+## How to Run
+1. Clone the repo
+2. Create a virtual environment
+3 
+  
