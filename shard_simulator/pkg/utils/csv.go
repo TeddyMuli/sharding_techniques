@@ -10,8 +10,8 @@ import (
 
 type LatencyRow struct {
     Algorithm  string
-    Throughput float64 // Transactions Per Second
-    P50        float64 // In milliseconds
+    Throughput float64
+    P50        float64
     P90        float64
     P99        float64
 }
@@ -23,7 +23,7 @@ func WriteDistributionCSV(filename string, rows []DistRow) {
     writer := csv.NewWriter(file)
     defer writer.Flush()
 
-    writer.Write([]string{"Algorithm", "ShardID", "KeyCount"}) // Header
+    writer.Write([]string{"Algorithm", "ShardID", "KeyCount"})
     for _, r := range rows {
         writer.Write([]string{r.Algorithm, r.ShardID, strconv.Itoa(r.KeyCount)})
     }
@@ -36,7 +36,7 @@ func WriteMovementCSV(filename string, rows []MoveRow) {
     writer := csv.NewWriter(file)
     defer writer.Flush()
 
-    writer.Write([]string{"Algorithm", "PercentMoved"}) // Header
+    writer.Write([]string{"Algorithm", "PercentMoved"})
     for _, r := range rows {
         writer.Write([]string{r.Algorithm, fmt.Sprintf("%.2f", r.PercentMoved)})
     }
@@ -52,7 +52,6 @@ func WriteLatencyCSV(filename string, rows []LatencyRow) {
     writer := csv.NewWriter(file)
     defer writer.Flush()
 
-    // Write Header
     writer.Write([]string{"Algorithm", "Throughput", "P50_ms", "P90_ms", "P99_ms"})
 
     for _, r := range rows {

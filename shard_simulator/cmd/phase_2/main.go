@@ -54,12 +54,10 @@ func CalculateMetrics(latencies []time.Duration) (p50, p90, p99 time.Duration) {
 		return 0, 0, 0
 	}
 
-	// 1. Sort the latencies from fastest to slowest
 	sort.Slice(latencies, func(i, j int) bool {
 		return latencies[i] < latencies[j]
 	})
 
-	// 2. Calculate indices
 	p50Idx := int(float64(len(latencies)) * 0.50)
 	p90Idx := int(float64(len(latencies)) * 0.90)
 	p99Idx := int(float64(len(latencies)) * 0.99)
@@ -113,7 +111,6 @@ func RunConcurrentBenchmark(sharder algorithms.Sharder, clientPool *transport.Sh
     wg.Wait()
     totalTime := time.Since(startAll)
 
-    // Calculate Latency Metrics
     p50, p90, p99 := CalculateMetrics(latencies)
     tps := float64(len(keys)) / totalTime.Seconds()
 
