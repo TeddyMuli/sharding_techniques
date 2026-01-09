@@ -5,7 +5,16 @@ import (
 	"fmt"
 	"encoding/csv"
 	"strconv"
+	"log"
 )
+
+type LatencyRow struct {
+    Algorithm  string
+    Throughput float64 // Transactions Per Second
+    P50        float64 // In milliseconds
+    P90        float64
+    P99        float64
+}
 
 func WriteDistributionCSV(filename string, rows []DistRow) {
     file, _ := os.Create(filename)
@@ -30,5 +39,29 @@ func WriteMovementCSV(filename string, rows []MoveRow) {
     writer.Write([]string{"Algorithm", "PercentMoved"}) // Header
     for _, r := range rows {
         writer.Write([]string{r.Algorithm, fmt.Sprintf("%.2f", r.PercentMoved)})
+    }
+}
+
+func WriteLatencyCSV(filename string, rows []LatencyRow) {
+    file, err := os.Create(filename)
+    if err != nil {
+        log.Fatalf("Could not create CSV: %v", err)
+    }
+    defer file.Close()
+
+    writer := csv.NewWriter(file)
+    defer writer.Flush()
+
+    // Write Header
+    writer.Write([]string{"Algorithm", "Throughput", "P50_ms", "P90_ms", "P99_ms"})
+
+    for _, r := range rows {
+        writer.Write([]string{
+            r.Algorithm,
+            fmt.Sprintf("%.2f", r.Throughput),
+            fmt.Sprintf("%.4f", r.P50),
+            fmt.Sprintf("%.4f", r.P90),
+            fmt.Sprintf("%.4f", r.P99),
+        })
     }
 }

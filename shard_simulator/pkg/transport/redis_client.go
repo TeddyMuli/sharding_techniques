@@ -26,7 +26,7 @@ func NewShardClient(registry map[string]string) (*ShardClient, error) {
 		defer cancel()
 		
 		if err := rdb.Ping(ctx).Err(); err != nil {
-			return nil, fmt.Errorf("failed to connect to %s at %s: ", nodeId, addr, err)
+			return nil, fmt.Errorf("failed to connect to %s at %s: %v", nodeId, addr, err)
 		}
 		
 		clients[nodeId] = rdb
@@ -47,4 +47,10 @@ func (s *ShardClient) Write(ctx context.Context, shardId string, key string, val
 	
 	latency := time.Since(start)
 	return latency, err
+}
+
+func (s *ShardClient) Cleanup() {
+	for _, client := range s.connections {
+		client.Close()
+	}
 }

@@ -43,5 +43,10 @@ func (c *ConsistentSharding) AddNode(nodeID string) {
 
 func (c *ConsistentSharding) GetShard(key string) string {
     owner := c.ring.LocateKey([]byte(key))
+    
+    if owner == nil {
+        return ""
+    }
+    
     return owner.String()
 }
