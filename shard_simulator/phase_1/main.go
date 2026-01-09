@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+	var allDistRows []utils.DistRow
+    var allMoveRows []utils.MoveRow
+    
 	competitors := []algorithms.Sharder{
 		algorithms.NewModulo(),
 		algorithms.NewConsistent(),
@@ -22,6 +25,13 @@ func main() {
 	fmt.Printf("Generated %d keys for benchmarking...\n\n", keyCount)
 
 	for _, algo := range competitors {
-		utils.RunBenchmark(algo, keys)
+		dRows, mRow := utils.RunBenchmark(algo, keys)
+		allDistRows = append(allDistRows, dRows...)
+        allMoveRows = append(allMoveRows, mRow)
 	}
+	
+	utils.WriteDistributionCSV("distribution.csv", allDistRows)
+    utils.WriteMovementCSV("movement.csv", allMoveRows)
+    
+    fmt.Println("\nFinal CSVs generated with all algorithms.")
 }
