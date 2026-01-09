@@ -1,32 +1,56 @@
+version: '3.8'
 services:
   shard-00:
     image: redis:alpine
     ports: ["6370:6379"]
+    networks:
+     - shard-net
   shard-01:
     image: redis:alpine
     ports: ["6371:6379"]
+    networks:
+     - shard-net
   shard-02:
     image: redis:alpine
     ports: ["6372:6379"]
+    networks:
+     - shard-net
   shard-03:
     image: redis:alpine
-    ports: ["6370:6379"]
+    ports: ["6373:6379"]
+    networks:
+     - shard-net
   shard-04:
     image: redis:alpine
-    ports: ["6371:6379"]
+    ports: ["6374:6379"]
+    networks:
+     - shard-net
   shard-05:
     image: redis:alpine
-    ports: ["6372:6379"]
+    ports: ["6375:6379"]
+    networks:
+     - shard-net
   shard-06:
     image: redis:alpine
-    ports: ["6370:6379"]
+    ports: ["6376:6379"]
+    networks:
+     - shard-net
   shard-07:
     image: redis:alpine
-    ports: ["6371:6379"]
+    ports: ["6377:6379"]
+    networks:
+     - shard-net
   shard-08:
     image: redis:alpine
-    ports: ["6372:6379"]
+    ports: ["6378:6379"]
+    networks:
+     - shard-net
   shard-09:
     image: redis:alpine
-    ports: ["6372:6379"]
+    ports: ["6379:6379"]
+    networks:
+     - shard-net
   
+networks:
+ shard-net:
+   driver: bridge
