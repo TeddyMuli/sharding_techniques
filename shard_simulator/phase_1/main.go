@@ -13,6 +13,9 @@ func main() {
 	competitors := []algorithms.Sharder{
 		algorithms.NewModulo(),
 		algorithms.NewConsistent(),
+		algorithms.NewRange(10000),
+        algorithms.NewDirectory(),
+        algorithms.NewGeo(),
 	}
 	
 	keyCount := 100_000
