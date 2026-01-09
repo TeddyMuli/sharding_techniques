@@ -1,10 +1,7 @@
 package algorithms
 
 import (
-	"fmt"
-
 	"github.com/cespare/xxhash"
-	"golang.org/x/tools/go/callgraph/cha"
 )
 
 type RendezvousHashing struct {
