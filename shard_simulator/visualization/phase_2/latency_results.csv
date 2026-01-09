@@ -1,0 +1,6 @@
+Algorithm,Throughput,P50_ms,P90_ms,P99_ms
+Modulo Hashing,7351.64,1.5980,4.6840,17.9840
+Consistent Hashing,8131.60,1.8860,4.4980,8.6780
+Range-Based Sharding,11407.23,1.3380,3.1480,7.1720
+Directory (Lookup) Sharding,8655.11,1.7290,3.9730,6.7410
+Geo-Sharding,12139.64,1.1750,2.8590,8.4550
