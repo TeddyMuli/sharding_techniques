@@ -19,9 +19,8 @@ type MoveRow struct {
 }
 
 
-func RunBenchmark(algo algorithms.Sharder, keys []string) {
+func RunBenchmark(algo algorithms.Sharder, keys []string) ([]DistRow, MoveRow) {
 	var distRows []DistRow
-    var moveRows []MoveRow
 
 	fmt.Printf("================ %s ================\n", algo.Name())
 
@@ -95,12 +94,13 @@ func RunBenchmark(algo algorithms.Sharder, keys []string) {
 	}
 
 	percentMoved := (float64(movedCount) / float64(len(keys))) * 100
-	moveRows = append(moveRows, MoveRow{
+	moveRow := MoveRow{
             Algorithm:    algo.Name(),
             PercentMoved: percentMoved,
-        })
-	writeDistributionCSV("distribution.csv", distRows)
-    writeMovementCSV("movement.csv", moveRows)
+        }
+	
 	fmt.Printf("[Movement] Keys Moved: %.2f%%\n", percentMoved)
 	fmt.Println("---------------------------------------------")
+	
+	return distRows, moveRow
 }

@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func writeDistributionCSV(filename string, rows []DistRow) {
+func WriteDistributionCSV(filename string, rows []DistRow) {
     file, _ := os.Create(filename)
     defer file.Close()
     
@@ -20,7 +20,7 @@ func writeDistributionCSV(filename string, rows []DistRow) {
     }
 }
 
-func writeMovementCSV(filename string, rows []MoveRow) {
+func WriteMovementCSV(filename string, rows []MoveRow) {
     file, _ := os.Create(filename)
     defer file.Close()
     
