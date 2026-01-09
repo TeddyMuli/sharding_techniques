@@ -34,7 +34,7 @@ func (r *RangeSharding) GetShard(key string) string {
 	
 	chunkIndex := id / r.rangeSize
 	
-	if chunkIndex > len(r.nodes) {
+	if chunkIndex >= len(r.nodes) {
 		return r.nodes[len(r.nodes)-1]
 	}
 	
