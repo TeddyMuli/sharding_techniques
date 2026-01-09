@@ -6,4 +6,9 @@ It is split into 2 phases:
  
  The algorithms benchmarked are:
  	- Modulo Hashing
-  -
+  - Consistent Hashing
+  - Rendezvous
+  - Range based Hashing
+  - Directory based Hashing
+  - Geo based Hashing
+  
