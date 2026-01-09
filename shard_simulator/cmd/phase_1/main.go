@@ -30,8 +30,8 @@ func main() {
         allMoveRows = append(allMoveRows, mRow)
 	}
 	
-	utils.WriteDistributionCSV("visualization/phase_1/distribution.csv", allDistRows)
-    utils.WriteMovementCSV("visualization/phase_1/movement.csv", allMoveRows)
+	utils.WriteDistributionCSV("../visualization/phase_1/distribution.csv", allDistRows)
+    utils.WriteMovementCSV("../visualization/phase_1/movement.csv", allMoveRows)
     
     fmt.Println("\nFinal CSVs generated with all algorithms.")
 }
