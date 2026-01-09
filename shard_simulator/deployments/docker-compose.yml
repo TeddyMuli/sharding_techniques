@@ -1,0 +1,32 @@
+services:
+  shard-00:
+    image: redis:alpine
+    ports: ["6370:6379"]
+  shard-01:
+    image: redis:alpine
+    ports: ["6371:6379"]
+  shard-02:
+    image: redis:alpine
+    ports: ["6372:6379"]
+  shard-03:
+    image: redis:alpine
+    ports: ["6370:6379"]
+  shard-04:
+    image: redis:alpine
+    ports: ["6371:6379"]
+  shard-05:
+    image: redis:alpine
+    ports: ["6372:6379"]
+  shard-06:
+    image: redis:alpine
+    ports: ["6370:6379"]
+  shard-07:
+    image: redis:alpine
+    ports: ["6371:6379"]
+  shard-08:
+    image: redis:alpine
+    ports: ["6372:6379"]
+  shard-09:
+    image: redis:alpine
+    ports: ["6372:6379"]
+  
