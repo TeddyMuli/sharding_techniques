@@ -10,8 +10,8 @@ import (
 
 func main() {
 	var allDistRows []utils.DistRow
-    var allMoveRows []utils.MoveRow
-    	
+	var allMoveRows []utils.MoveRow
+
 	keyCount := 100_000
 	keys := generator.GenerateKeys(keyCount)
 	fmt.Printf("Generated %d keys for benchmarking...\n\n", keyCount)
@@ -19,11 +19,11 @@ func main() {
 	for _, algo := range algorithms.Competitors {
 		dRows, mRow := utils.RunBenchmark(algo, keys)
 		allDistRows = append(allDistRows, dRows...)
-        allMoveRows = append(allMoveRows, mRow)
+		allMoveRows = append(allMoveRows, mRow)
 	}
-	
+
 	utils.WriteDistributionCSV("visualization/phase_1/distribution.csv", allDistRows)
-    utils.WriteMovementCSV("visualization/phase_1/movement.csv", allMoveRows)
-    
-    fmt.Println("\nFinal CSVs generated with all algorithms.")
+	utils.WriteMovementCSV("visualization/phase_1/movement.csv", allMoveRows)
+
+	fmt.Println("\nFinal CSVs generated with all algorithms.")
 }

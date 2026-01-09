@@ -7,7 +7,7 @@ import (
 
 type myMember string
 type ConsistentSharding struct {
-    ring *consistent.Consistent
+	ring *consistent.Consistent
 }
 
 func (m myMember) String() string {
@@ -24,29 +24,29 @@ func NewConsistent() *ConsistentSharding {
 	cfg := consistent.Config{
 		PartitionCount:    271,
 		ReplicationFactor: 20,
-		Load:        1.25,
+		Load:              1.25,
 		Hasher:            hasher{},
 	}
-	
+
 	return &ConsistentSharding{
 		ring: consistent.New(nil, cfg),
 	}
 }
 
 func (c *ConsistentSharding) Name() string {
-    return "Consistent Hashing"
+	return "Consistent Hashing"
 }
 
 func (c *ConsistentSharding) AddNode(nodeID string) {
-    c.ring.Add(myMember(nodeID))
+	c.ring.Add(myMember(nodeID))
 }
 
 func (c *ConsistentSharding) GetShard(key string) string {
-    owner := c.ring.LocateKey([]byte(key))
-    
-    if owner == nil {
-        return ""
-    }
-    
-    return owner.String()
+	owner := c.ring.LocateKey([]byte(key))
+
+	if owner == nil {
+		return ""
+	}
+
+	return owner.String()
 }

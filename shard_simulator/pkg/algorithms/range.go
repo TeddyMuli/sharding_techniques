@@ -6,13 +6,13 @@ import (
 )
 
 type RangeSharding struct {
-	nodes [] string
+	nodes     []string
 	rangeSize int
 }
 
 func NewRange(rangeSize int) *RangeSharding {
 	return &RangeSharding{
-		nodes: []string{},
+		nodes:     []string{},
 		rangeSize: rangeSize,
 	}
 }
@@ -26,17 +26,21 @@ func (r *RangeSharding) AddNode(nodeID string) {
 }
 
 func (r *RangeSharding) GetShard(key string) string {
-	if len(r.nodes) == 0 { return "" }
+	if len(r.nodes) == 0 {
+		return ""
+	}
 	parts := strings.Split(key, "-")
-	if len(parts) < 2 { return r.nodes[0] }
-	
+	if len(parts) < 2 {
+		return r.nodes[0]
+	}
+
 	id, _ := strconv.Atoi(parts[1])
-	
+
 	chunkIndex := id / r.rangeSize
-	
+
 	if chunkIndex >= len(r.nodes) {
 		return r.nodes[len(r.nodes)-1]
 	}
-	
+
 	return r.nodes[chunkIndex]
 }

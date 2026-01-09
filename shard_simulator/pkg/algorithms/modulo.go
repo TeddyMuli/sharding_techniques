@@ -22,9 +22,9 @@ func (m *ModuloSharding) GetShard(key string) string {
 	if len(m.nodes) == 0 {
 		return ""
 	}
-	
+
 	hash := crc32.ChecksumIEEE([]byte(key))
 	index := int(hash) % len(m.nodes)
-	
+
 	return m.nodes[index]
 }

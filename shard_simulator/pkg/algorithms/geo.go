@@ -5,7 +5,7 @@ import (
 )
 
 type GeoSharding struct {
-	regionMap map[string]string 
+	regionMap map[string]string
 	nodes     []string
 }
 
@@ -22,7 +22,7 @@ func (g *GeoSharding) Name() string {
 
 func (g *GeoSharding) AddNode(nodeID string) {
 	g.nodes = append(g.nodes, nodeID)
-	
+
 	count := len(g.nodes)
 	if count <= 2 {
 		g.regionMap["US"] = nodeID
@@ -35,7 +35,7 @@ func (g *GeoSharding) AddNode(nodeID string) {
 
 func (g *GeoSharding) GetShard(key string) string {
 	lastChar := key[len(key)-1:]
-	
+
 	region := "ASIA"
 	if strings.ContainsAny(lastChar, "0123") {
 		region = "US"
@@ -46,6 +46,8 @@ func (g *GeoSharding) GetShard(key string) string {
 	if node, ok := g.regionMap[region]; ok {
 		return node
 	}
-	if len(g.nodes) > 0 { return g.nodes[0] }
+	if len(g.nodes) > 0 {
+		return g.nodes[0]
+	}
 	return ""
 }

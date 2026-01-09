@@ -1,23 +1,22 @@
 package utils
 
-import 	(
-	"sync"
+import (
 	"fmt"
-	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/analyzer"
 	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/algorithms"
+	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/analyzer"
+	"sync"
 )
 
 type DistRow struct {
-    Algorithm string
-    ShardID   string
-    KeyCount  int
+	Algorithm string
+	ShardID   string
+	KeyCount  int
 }
 
 type MoveRow struct {
-    Algorithm    string
-    PercentMoved float64
+	Algorithm    string
+	PercentMoved float64
 }
-
 
 func RunBenchmark(algo algorithms.Sharder, keys []string) ([]DistRow, MoveRow) {
 	var distRows []DistRow
@@ -36,14 +35,14 @@ func RunBenchmark(algo algorithms.Sharder, keys []string) ([]DistRow, MoveRow) {
 		distribution[node]++
 		keyLocation[key] = node
 	}
-	
+
 	for node, count := range distribution {
-            distRows = append(distRows, DistRow{
-                Algorithm: algo.Name(),
-                ShardID:   node,
-                KeyCount:  count,
-            })
-        }
+		distRows = append(distRows, DistRow{
+			Algorithm: algo.Name(),
+			ShardID:   node,
+			KeyCount:  count,
+		})
+	}
 	var mu sync.Mutex
 
 	var wg sync.WaitGroup
@@ -95,12 +94,12 @@ func RunBenchmark(algo algorithms.Sharder, keys []string) ([]DistRow, MoveRow) {
 
 	percentMoved := (float64(movedCount) / float64(len(keys))) * 100
 	moveRow := MoveRow{
-            Algorithm:    algo.Name(),
-            PercentMoved: percentMoved,
-        }
-	
+		Algorithm:    algo.Name(),
+		PercentMoved: percentMoved,
+	}
+
 	fmt.Printf("[Movement] Keys Moved: %.2f%%\n", percentMoved)
 	fmt.Println("---------------------------------------------")
-	
+
 	return distRows, moveRow
 }

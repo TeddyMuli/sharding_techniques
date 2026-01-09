@@ -29,23 +29,23 @@ var registry = map[string]string{
 
 func main() {
 	var latencyRows []utils.LatencyRow
-	
+
 	fmt.Println("Connecting to Docker Cluster...")
 	clientPool, err := transport.NewShardClient(registry)
-	
+
 	if err != nil {
 		log.Fatalf("Infrastructure Error: %v", err)
 	}
 	defer clientPool.Cleanup()
 	fmt.Println("Connected to all shards!")
-	
+
 	keys := generator.GenerateKeys(1000)
 
 	for _, algo := range algorithms.Competitors {
 		row := RunConcurrentBenchmark(algo, clientPool, keys)
 		latencyRows = append(latencyRows, row)
 	}
-	
+
 	utils.WriteLatencyCSV("visualization/phase_2/latency_results.csv", latencyRows)
 }
 
@@ -66,66 +66,68 @@ func CalculateMetrics(latencies []time.Duration) (p50, p90, p99 time.Duration) {
 }
 
 func RunConcurrentBenchmark(sharder algorithms.Sharder, clientPool *transport.ShardClient, keys []string) utils.LatencyRow {
-    var wg sync.WaitGroup
-    var mu sync.Mutex
-    
-    for i := range 10 {
-        sharder.AddNode(fmt.Sprintf("node-%02d", i))
-    }
-    
-    latencies := make([]time.Duration, 0, len(keys))
-    workerCount := 20
-    ctx := context.Background()
+	var wg sync.WaitGroup
+	var mu sync.Mutex
 
-    chunkSize := len(keys) / workerCount
-    startAll := time.Now()
+	for i := range 10 {
+		sharder.AddNode(fmt.Sprintf("node-%02d", i))
+	}
 
-    for i :=range workerCount {
-        wg.Add(1)
-        
-        startIdx := i * chunkSize
-        endIdx := startIdx + chunkSize
-        if i == workerCount-1 { endIdx = len(keys) }
+	latencies := make([]time.Duration, 0, len(keys))
+	workerCount := 20
+	ctx := context.Background()
 
-        go func(kChunk []string) {
-            defer wg.Done()
-            localLatencies := []time.Duration{}
+	chunkSize := len(keys) / workerCount
+	startAll := time.Now()
 
-            for _, key := range kChunk {
-                target := sharder.GetShard(key)
-                if target == "" {
-                    continue
-                }
-                latency, err := clientPool.Write(ctx, target, key, "value")
-                if err == nil {
-                    localLatencies = append(localLatencies, latency)
-                }
-            }
+	for i := range workerCount {
+		wg.Add(1)
 
-            mu.Lock()
-            latencies = append(latencies, localLatencies...)
-            mu.Unlock()
-        }(keys[startIdx:endIdx])
-    }
+		startIdx := i * chunkSize
+		endIdx := startIdx + chunkSize
+		if i == workerCount-1 {
+			endIdx = len(keys)
+		}
 
-    wg.Wait()
-    totalTime := time.Since(startAll)
+		go func(kChunk []string) {
+			defer wg.Done()
+			localLatencies := []time.Duration{}
 
-    p50, p90, p99 := CalculateMetrics(latencies)
-    tps := float64(len(keys)) / totalTime.Seconds()
+			for _, key := range kChunk {
+				target := sharder.GetShard(key)
+				if target == "" {
+					continue
+				}
+				latency, err := clientPool.Write(ctx, target, key, "value")
+				if err == nil {
+					localLatencies = append(localLatencies, latency)
+				}
+			}
 
-    fmt.Printf("\n--- Results for %s ---\n", sharder.Name())
-    fmt.Printf("Throughput:   %.2f req/sec\n", tps)
-    fmt.Printf("p50 Latency:  %v\n", p50)
-    fmt.Printf("p90 Latency:  %v\n", p90)
-    fmt.Printf("p99 Latency:  %v (Tail Latency)\n", p99)
-    fmt.Println("--------------------------------")
-    
-    return utils.LatencyRow{
-        Algorithm:  sharder.Name(),
-        Throughput: tps,
-        P50:        float64(p50.Microseconds()) / 1000.0,
-        P90:        float64(p90.Microseconds()) / 1000.0,
-        P99:        float64(p99.Microseconds()) / 1000.0,
-    }
+			mu.Lock()
+			latencies = append(latencies, localLatencies...)
+			mu.Unlock()
+		}(keys[startIdx:endIdx])
+	}
+
+	wg.Wait()
+	totalTime := time.Since(startAll)
+
+	p50, p90, p99 := CalculateMetrics(latencies)
+	tps := float64(len(keys)) / totalTime.Seconds()
+
+	fmt.Printf("\n--- Results for %s ---\n", sharder.Name())
+	fmt.Printf("Throughput:   %.2f req/sec\n", tps)
+	fmt.Printf("p50 Latency:  %v\n", p50)
+	fmt.Printf("p90 Latency:  %v\n", p90)
+	fmt.Printf("p99 Latency:  %v (Tail Latency)\n", p99)
+	fmt.Println("--------------------------------")
+
+	return utils.LatencyRow{
+		Algorithm:  sharder.Name(),
+		Throughput: tps,
+		P50:        float64(p50.Microseconds()) / 1000.0,
+		P90:        float64(p90.Microseconds()) / 1000.0,
+		P99:        float64(p99.Microseconds()) / 1000.0,
+	}
 }

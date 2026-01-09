@@ -32,12 +32,14 @@ func (d *DirectorySharding) GetShard(key string) string {
 		return shard
 	}
 
-	if len(d.nodes) == 0 { return "" }
-	
+	if len(d.nodes) == 0 {
+		return ""
+	}
+
 	assignedNode := d.nodes[d.nextIdx]
 	d.directory[key] = assignedNode
-	
+
 	d.nextIdx = (d.nextIdx + 1) % len(d.nodes)
-	
+
 	return assignedNode
 }
