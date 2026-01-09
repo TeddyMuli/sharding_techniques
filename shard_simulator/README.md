@@ -18,9 +18,39 @@ It is split into 2 phases:
   - Docker
   - Golang 1.23 or later
   - Python
+  - [uv](https://docs.astral.sh/uv/guides/install-python/)
   
 ## How to Run
 1. Clone the repo
+```bash
+git clone https://github.com/TeddyMuli/sharding_techniques
+cd sharding_techniques
+```
 2. Create a virtual environment
-3 
-  
+```bash
+uv venv virt
+source virt/bin/activate
+```
+3. Install go dependcies
+```bash
+go mod tidy
+```
+4. Install python dependcies
+```bash
+uv pip install -r requirements.txt
+```
+5. Run phase 1
+```bash
+go run -race cmd/phase_1/main.go
+```
+6. Run phase 2
+```bash
+go run -race cmd/phase_2/main.go
+```
+7. Create visualizations
+```bash
+cd visualization
+./phase_1/visualize.py
+./phase_2/visualize.py
+```
+8. View the generate images
