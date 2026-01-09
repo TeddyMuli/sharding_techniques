@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-
+	"sync"
+	
 	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/analyzer"
 	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/algorithms"
 	"github.com/TeddyMuli/sharding_techniques/shard_simulator/phase_1/pkg/generator"
@@ -38,6 +39,41 @@ func RunBenchmark(algo algorithms.Sharder, keys []string) {
 		distribution[node]++
 		keyLocation[key] = node
 	}
+	var mu sync.Mutex
+	
+	var wg sync.WaitGroup
+	workerCount := 10
+	
+	chunkSize := len(keys) / workerCount
+
+	for i := range workerCount {
+		wg.Add(1)
+		
+		start := i * chunkSize
+		end := start + chunkSize
+		
+		if i == workerCount-1 {
+			end = len(keys)
+		}
+		
+		go func(keyChunk []string) {
+			defer wg.Done()
+			localStats := make(map[string]int)
+			
+			for _, key := range keyChunk {
+				node := algo.GetShard(key)
+				localStats[node]++
+			}
+			
+			mu.Lock()
+			for node, count := range localStats {
+				distribution[node] += count
+			}
+			mu.Unlock()
+		}(keys[start:end])
+	}
+	
+	wg.Wait()
 	
 	skew := analyzer.CalculateSkew(distribution)
 	fmt.Printf("[Skew] Standard Deviation: %.2f (Lower is better)\n", skew)
