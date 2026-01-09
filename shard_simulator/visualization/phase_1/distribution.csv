@@ -1,44 +1,54 @@
 Algorithm,ShardID,KeyCount
-Modulo Hashing,node-06,9900
-Modulo Hashing,node-02,9928
-Modulo Hashing,node-05,9839
-Modulo Hashing,node-01,10158
-Modulo Hashing,node-07,9988
-Modulo Hashing,node-04,10021
-Modulo Hashing,node-09,10025
-Modulo Hashing,node-03,10110
-Modulo Hashing,node-08,10032
-Modulo Hashing,node-00,9999
-Consistent Hashing,node-01,9185
-Consistent Hashing,node-06,8828
-Consistent Hashing,node-02,10255
-Consistent Hashing,node-07,12479
-Consistent Hashing,node-05,8519
-Consistent Hashing,node-09,10357
-Consistent Hashing,node-03,12578
-Consistent Hashing,node-08,11482
+Modulo Hashing,node-02,9925
+Modulo Hashing,node-04,10007
+Modulo Hashing,node-03,10104
+Modulo Hashing,node-05,9947
+Modulo Hashing,node-09,9992
+Modulo Hashing,node-07,10019
+Modulo Hashing,node-06,10110
+Modulo Hashing,node-08,9982
+Modulo Hashing,node-00,10003
+Modulo Hashing,node-01,9911
+Consistent Hashing,node-09,10455
+Consistent Hashing,node-03,12537
+Consistent Hashing,node-02,10232
+Consistent Hashing,node-07,12575
+Consistent Hashing,node-08,11368
+Consistent Hashing,node-06,8736
 Consistent Hashing,node-00,7446
-Consistent Hashing,node-04,8871
-Range-Based Sharding,node-01,104
-Range-Based Sharding,node-05,103
-Range-Based Sharding,node-06,95
-Range-Based Sharding,node-03,73
-Range-Based Sharding,node-08,100
-Range-Based Sharding,node-09,99099
-Range-Based Sharding,node-02,118
-Range-Based Sharding,node-07,98
-Range-Based Sharding,node-00,111
-Range-Based Sharding,node-04,99
-Directory (Lookup) Sharding,node-02,9994
-Directory (Lookup) Sharding,node-03,9995
-Directory (Lookup) Sharding,node-04,10014
-Directory (Lookup) Sharding,node-07,10006
-Directory (Lookup) Sharding,node-09,10003
-Directory (Lookup) Sharding,node-05,9993
-Directory (Lookup) Sharding,node-06,9994
-Directory (Lookup) Sharding,node-08,10001
-Directory (Lookup) Sharding,node-00,10000
-Directory (Lookup) Sharding,node-01,10000
-Geo-Sharding,node-09,29904
-Geo-Sharding,node-01,40083
-Geo-Sharding,node-03,30013
+Consistent Hashing,node-01,9243
+Consistent Hashing,node-05,8536
+Consistent Hashing,node-04,8872
+Range-Based Sharding,node-07,102
+Range-Based Sharding,node-06,97
+Range-Based Sharding,node-03,110
+Range-Based Sharding,node-09,99119
+Range-Based Sharding,node-08,111
+Range-Based Sharding,node-05,97
+Range-Based Sharding,node-02,88
+Range-Based Sharding,node-04,88
+Range-Based Sharding,node-01,89
+Range-Based Sharding,node-00,99
+Directory (Lookup) Sharding,node-04,10000
+Directory (Lookup) Sharding,node-05,10000
+Directory (Lookup) Sharding,node-00,10007
+Directory (Lookup) Sharding,node-01,10001
+Directory (Lookup) Sharding,node-02,10000
+Directory (Lookup) Sharding,node-06,10004
+Directory (Lookup) Sharding,node-07,10007
+Directory (Lookup) Sharding,node-08,9994
+Directory (Lookup) Sharding,node-09,9988
+Directory (Lookup) Sharding,node-03,9999
+Geo-Sharding,node-03,29995
+Geo-Sharding,node-01,39784
+Geo-Sharding,node-09,30221
+Rendezvous Hashing,node-08,10037
+Rendezvous Hashing,node-04,10025
+Rendezvous Hashing,node-01,9904
+Rendezvous Hashing,node-09,10128
+Rendezvous Hashing,node-07,9851
+Rendezvous Hashing,node-03,10080
+Rendezvous Hashing,node-02,9926
+Rendezvous Hashing,node-00,9889
+Rendezvous Hashing,node-06,10164
+Rendezvous Hashing,node-05,9996

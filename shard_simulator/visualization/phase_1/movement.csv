@@ -1,6 +1,7 @@
 Algorithm,PercentMoved
-Modulo Hashing,90.98
-Consistent Hashing,15.21
-Range-Based Sharding,98.98
+Modulo Hashing,90.94
+Consistent Hashing,15.08
+Range-Based Sharding,99.02
 Directory (Lookup) Sharding,0.00
-Geo-Sharding,29.90
+Geo-Sharding,30.22
+Rendezvous Hashing,9.09

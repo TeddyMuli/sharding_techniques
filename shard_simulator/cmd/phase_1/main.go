@@ -11,20 +11,12 @@ import (
 func main() {
 	var allDistRows []utils.DistRow
     var allMoveRows []utils.MoveRow
-    
-	competitors := []algorithms.Sharder{
-		algorithms.NewModulo(),
-		algorithms.NewConsistent(),
-		algorithms.NewRange(10000),
-		algorithms.NewDirectory(),
-		algorithms.NewGeo(),
-	}
-	
+    	
 	keyCount := 100_000
 	keys := generator.GenerateKeys(keyCount)
 	fmt.Printf("Generated %d keys for benchmarking...\n\n", keyCount)
 
-	for _, algo := range competitors {
+	for _, algo := range algorithms.Competitors {
 		dRows, mRow := utils.RunBenchmark(algo, keys)
 		allDistRows = append(allDistRows, dRows...)
         allMoveRows = append(allMoveRows, mRow)

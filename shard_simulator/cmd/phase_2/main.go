@@ -39,16 +39,9 @@ func main() {
 	defer clientPool.Cleanup()
 	fmt.Println("Connected to all shards!")
 	
-	competitors := []algorithms.Sharder{
-		algorithms.NewModulo(),
-		algorithms.NewConsistent(),
-		algorithms.NewRange(10000),
-		algorithms.NewDirectory(),
-		algorithms.NewGeo(),
-	}
 	keys := generator.GenerateKeys(1000)
 
-	for _, algo := range competitors {
+	for _, algo := range algorithms.Competitors {
 		row := RunConcurrentBenchmark(algo, clientPool, keys)
 		latencyRows = append(latencyRows, row)
 	}
